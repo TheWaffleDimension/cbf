@@ -40,7 +40,7 @@ local function loop(loop)
     if loop.conditional.type == "equals" then
       local shouldBreak = false
       while not shouldBreak do
-        parse(loop.children)
+        parse(loop.children, true)
         for i,v in pairs(loop.conditional.breaks) do
           shouldBreak = equals(v)
           if shouldBreak then break end
@@ -56,16 +56,31 @@ end
 
 local function conditional(conditional)
   if conditional.condition == "equals" then
+    local left = conditional.left
+    local right = conditional.right
+    local action = conditional.action
 
+    left = parse(left, true)
+    right = parse(right, true)
+
+    if left == right then
+      return parse(action, true)
+    end
   end
 end
 
-parse = function(parsedInput)
+parse = function(parsedInput, loop)
+  loop = loop or false
+
   for i,v in ipairs(parsedInput) do
     if v.type == "loop" then
       loop(v)
     elseif v.type == "conditional" then
-      conditional(v)
+      if loop then
+        return conditional(v)
+      else
+        conditional(v)
+      end
     elseif v.type == "incrementStack" then
       incrementStack()
     elseif v.type == "decrementStack" then
@@ -79,7 +94,11 @@ parse = function(parsedInput)
     elseif v.type == "printAscii" then
       prntAscii()
     elseif v.type == "break" then
-      return true
+      if loop then
+        return true
+      else
+        break
+      end
     elseif v.type == "return" then
       return stack[stackPointer]
     end

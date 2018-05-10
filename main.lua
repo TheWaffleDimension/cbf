@@ -33,5 +33,5 @@ local run = require"runner"
 local parse = require"parser"
 local tokenize = require"tokenizer"
 
-local input = ">++++++>++++<<(++++>>>+[#:<#]<<<)()|"
+local input = ">++++++>++++<<<(>++++>>>+[#:<#:;]><<<)\""
 -- run(parse(tokenize(input)))

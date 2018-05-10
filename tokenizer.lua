@@ -32,7 +32,13 @@ return function(input)
     elseif c == ">" then
       table.insert(Tokens, generateToken("incrementStack"))
     elseif c == "<" then
-      table.insert(Tokens, generateToken("decrementStack")) 
+      table.insert(Tokens, generateToken("decrementStack"))
+    elseif c == "#" then
+      table.insert(Tokens, generateToken("return"))
+    elseif c == "|" then
+      table.insert(Tokens, generateToken("print"))
+    elseif c == "\"" then
+      table.insert(Tokens, generateToken("printAscii"))
     end
   end
 
