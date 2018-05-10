@@ -1,6 +1,8 @@
 # sturdy-goggles
 A really crappy stack-based esoteric programming language. Don't expect too much out of this.
 
+Still a WIP.
+
 ## Implementation
 This implementation is in Lua. Shouldn't be hard to recreate in other languages.
 
@@ -20,55 +22,5 @@ Stack in this implementation is locked from 0 - 1,000,000.
 | ;        | Break loop/terminate the program if not in a loop. |
 | >        | Increment the stack pointer. |
 | <        | Decrement the stack pointer. |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 RIP stag
