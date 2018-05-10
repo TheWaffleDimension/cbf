@@ -23,5 +23,3 @@ Stack in this implementation is locked from 0 - 1,000,000.
 | ;        | Break loop/terminate the program if not in a loop. |
 | >        | Increment the stack pointer. |
 | <        | Decrement the stack pointer. |
-
-RIP stag
