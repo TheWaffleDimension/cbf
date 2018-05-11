@@ -1,7 +1,6 @@
-# sturdy-goggles
+# CBF / Conditional Brainfuck
 A really crappy stack-based esoteric programming language. Don't expect too much out of this.
-
-Still a WIP.
+Took inspiration from Brainfuck, and added conditionals.
 
 ## Implementation
 This implementation is in Lua. Shouldn't be hard to recreate in other languages.
