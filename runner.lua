@@ -51,15 +51,27 @@ local function loop(loop)
 end
 
 local function conditional(conditional)
+  local left = conditional.left
+  local right = conditional.right
+  local action = conditional.action
+
+  left = parse(left, true)
+  right = parse(right, true)
+
   if conditional.condition == "equals" then
-    local left = conditional.left
-    local right = conditional.right
-    local action = conditional.action
-
-    left = parse(left, true)
-    right = parse(right, true)
-
     if left == right then
+      return parse(action, true)
+    end
+  elseif conditional.condition == "not" then
+    if left ~= right then
+      return parse(action, true)
+    end
+  elseif conditional.condition == "greater" then
+    if left > right then
+      return parse(action, true)
+    end
+  elseif conditional.condition == "less" then
+    if left < right then
       return parse(action, true)
     end
   end
@@ -101,4 +113,6 @@ parse = function(parsedInput, loopBool)
   end
 end
 
-return parse
+return function(parsedInput)
+  return parse(parsedInput, false)
+end

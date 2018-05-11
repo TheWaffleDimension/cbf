@@ -17,16 +17,14 @@ tokenizeLoop = function()
   loop.children = {}
 
   while Pos <= Input:len() and not endLoop do
+    Pos = Pos + 1
     local c = getNextChar()
     if c == "]" then
       endLoop = true
     else
-      Pos = Pos + 1
       local token = tokenize(c)
       table.insert(loop.children, token)
     end
-
-    Pos = Pos + 1
   end
 
   return loop
@@ -49,6 +47,15 @@ tokenizeConditional = function()
     elseif c == ":" then
       state = "right"
       conditional.condition = "equals"
+    elseif c == "!" then
+      state = "right"
+      conditional.condition = "not"
+    elseif c == "{" then
+      state = "right"
+      conditional.condition = "less"
+    elseif c == "}" then
+      state = "right"
+      conditional.condition = "greater"
     elseif c == "=" then
       state = action
     else
@@ -106,8 +113,6 @@ return function(input)
 
   while Pos <= Input:len() do
     local c = getNextChar()
-    print(c)
-    print(tokenize(c))
     local token = tokenize(c)
     table.insert(Tokens, token)
 
