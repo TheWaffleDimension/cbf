@@ -37,10 +37,21 @@ local run = require"runner"
 local parse = require"parser"
 local tokenize = require"tokenizer"
 
-local input = ">++++++++++++++++++++++++++++++++++++++++++++++++++<(+|>-|<)" --">++++<(++++|>-|[#}>#=;]<<)|"
-print"Tokenizing..."
-local tokens = tokenize(input)
-print"Parsing..."
-local parsed = parse(tokens)
-print"Running..."
-local result = run(parsed)
+if arg[1] then
+  local f = assert(io.open(arg[1], "rb"))
+  local input = f:read("*all")
+  f:close()
+  local tokens = tokenize(input)
+  local parsed = parse(tokens)
+  local result = run(parsed)
+else
+  local input
+  while true do
+    io.flush()
+    io.write"> "
+    input = io.read()
+    local tokens = tokenize(input)
+    local parsed = parse(tokens)
+    local result = run(parsed)
+  end
+end

@@ -16,10 +16,10 @@ tokenizeLoop = function()
   loop.type = "loop"
   loop.children = {}
 
-  while Pos <= Input:len() and not endLoop do
+  while Pos < Input:len() and not endLoop do
     Pos = Pos + 1
     local c = getNextChar()
-    if c == "]" then
+    if c == ")" then
       endLoop = true
     else
       local token = tokenize(c)
@@ -40,9 +40,11 @@ tokenizeConditional = function()
   conditional.right = {}
   conditional.action = {}
 
-  while Pos <= Input:len() and not state == "end" do
+  while Pos < Input:len() and state ~= "end" do
+    Pos = Pos + 1
+
     local c = getNextChar()
-    if c == ")" then
+    if c == "]" then
       state = "end"
     elseif c == ":" then
       state = "right"
@@ -57,7 +59,7 @@ tokenizeConditional = function()
       state = "right"
       conditional.condition = "greater"
     elseif c == "=" then
-      state = action
+      state = "action"
     else
       local token = tokenize(c)
       if state == "left" then
@@ -68,8 +70,6 @@ tokenizeConditional = function()
         table.insert(conditional.action, token)
       end
     end
-
-    Pos = Pos + 1
   end
 
   return conditional
@@ -94,6 +94,8 @@ tokenize = function(c)
     return generateToken("decrementStack")
   elseif c == "#" then
     return generateToken("return")
+  elseif c == ";" then
+    return generateToken("break")
   elseif c == "|" then
     return generateToken("print")
   elseif c == "\"" then

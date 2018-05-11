@@ -43,7 +43,7 @@ local function loop(loop)
   while not shouldBreak do
     for i,v in pairs(loop.children) do
       local res = parse({v}, true)
-      if res then
+      if res == "break" then
         shouldBreak = true
       end
     end
@@ -103,7 +103,7 @@ parse = function(parsedInput, loopBool)
       prntAscii()
     elseif v.type == "break" then
       if loopBool then
-        return true
+        return "break"
       else
         break
       end
