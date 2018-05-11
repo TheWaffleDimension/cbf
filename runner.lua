@@ -1,4 +1,7 @@
 local stack = {}
+for i = 1, 1000000 do
+  stack[i] = 0
+end
 local stackPointer = 1
 
 local parse
@@ -36,20 +39,13 @@ local function equals(number)
 end
 
 local function loop(loop)
-  if loop.conditional then
-    if loop.conditional.type == "equals" then
-      local shouldBreak = false
-      while not shouldBreak do
-        parse(loop.children, true)
-        for i,v in pairs(loop.conditional.breaks) do
-          shouldBreak = equals(v)
-          if shouldBreak then break end
-        end
+  local shouldBreak = false
+  while not shouldBreak do
+    for i,v in pairs(loop.children) do
+      local res = parse({v}, true)
+      if res then
+        shouldBreak = true
       end
-    end
-  else -- Unbreaking loops here
-    while true do
-      if parse(loop.children) == true then break end
     end
   end
 end
@@ -69,14 +65,14 @@ local function conditional(conditional)
   end
 end
 
-parse = function(parsedInput, loop)
-  loop = loop or false
+parse = function(parsedInput, loopBool)
+  loopBool = loopBool or false
 
   for i,v in ipairs(parsedInput) do
     if v.type == "loop" then
       loop(v)
     elseif v.type == "conditional" then
-      if loop then
+      if loopBool then
         return conditional(v)
       else
         conditional(v)
@@ -94,7 +90,7 @@ parse = function(parsedInput, loop)
     elseif v.type == "printAscii" then
       prntAscii()
     elseif v.type == "break" then
-      if loop then
+      if loopBool then
         return true
       else
         break

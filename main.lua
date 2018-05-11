@@ -23,6 +23,7 @@ Specification:
   | = print number at stack pointer
   " = print number at stack pointer as ascii
   : = equals
+  = = Then (Conditional only)
   ; = break loop/terminate program (if not in loop)
   > = increment stack pointer
   < = decrement stack pointer
@@ -34,4 +35,4 @@ local parse = require"parser"
 local tokenize = require"tokenizer"
 
 local input = ">++++++>++++<<<(>++++>>>+[#:<#:;]><<<)\""
--- run(parse(tokenize(input)))
+run(parse(tokenize(input)))
