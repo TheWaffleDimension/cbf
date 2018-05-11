@@ -19,8 +19,7 @@ Stack in this implementation is locked from 0 - 1,000,000.
 | \|       | Print the number at the current stack pointer. |
 | \"       | Print the number at the current stack pointer in ASCII. |
 | :        | Equals. (Only used in conditionals) |
+| =        | Then. (Only used in conditionals) |
 | ;        | Break loop/terminate the program if not in a loop. |
 | >        | Increment the stack pointer. |
 | <        | Decrement the stack pointer. |
-
-RIP stag
